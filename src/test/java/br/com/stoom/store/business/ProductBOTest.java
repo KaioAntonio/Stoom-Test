@@ -1,5 +1,8 @@
 package br.com.stoom.store.business;
 
+import br.com.stoom.store.business.helper.BrandHelper;
+import br.com.stoom.store.business.helper.CategoryHelper;
+import br.com.stoom.store.business.helper.ProductHelper;
 import br.com.stoom.store.config.exception.ServiceException;
 import br.com.stoom.store.dto.product.ProductCreateDTO;
 import br.com.stoom.store.dto.product.ProductResponseDTO;
@@ -29,7 +32,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -53,6 +55,9 @@ public class ProductBOTest {
     @Mock
     private SkuGenerator skuGenerator;
 
+    private BrandHelper brandHelper = new BrandHelper();
+    private ProductHelper productHelper = new ProductHelper();
+    private CategoryHelper categoryHelper = new CategoryHelper();
     private ObjectMapper objectMapper = new ObjectMapper();
     @Before
     public void init() {
@@ -64,11 +69,11 @@ public class ProductBOTest {
 
     @Test
     public void whenTryFindAllProductsReturnSuccess() {
-        Category category = getCategory();
+        Category category = categoryHelper.getCategory();
 
-        Brand brand = getBrand();
+        Brand brand = brandHelper.getBrand();
 
-        Product product = getProduct(category, brand);
+        Product product = productHelper.getProduct(category, brand);
 
         List<Product> productList = Collections.singletonList(product);
         Page<Product> productPage = new PageImpl<>(productList);
@@ -91,10 +96,10 @@ public class ProductBOTest {
 
     @Test
     public void whenTryCreateProductsReturnSuccess() throws ServiceException {
-        Category category = getCategory();
-        Brand brand = getBrand();
-        Product product = getProduct(category, brand);
-        ProductCreateDTO productCreateDTO = getProductCreateDTO(brand, category);
+        Category category = categoryHelper.getCategory();
+        Brand brand = brandHelper.getBrand();
+        Product product = productHelper.getProduct(category, brand);
+        ProductCreateDTO productCreateDTO = productHelper.getProductCreateDTO(brand, category);
         String sku = "Cat-Bra-Pro-" + System.currentTimeMillis();
 
         when(categoryBO.findByName(anyString())).thenReturn(category);
@@ -113,10 +118,10 @@ public class ProductBOTest {
     @Test
     public void whenTryUpdateProductsReturnSuccess() throws ServiceException {
         Long id = 1L;
-        Category category = getCategory();
-        Brand brand = getBrand();
-        Product product = getProduct(category, brand);
-        ProductCreateDTO productCreateDTO = getProductCreateDTO(brand,category);
+        Category category = categoryHelper.getCategory();
+        Brand brand = brandHelper.getBrand();
+        Product product = productHelper.getProduct(category, brand);
+        ProductCreateDTO productCreateDTO = productHelper.getProductCreateDTO(brand,category);
         productCreateDTO.setName("Product 2");
 
         when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
@@ -134,9 +139,9 @@ public class ProductBOTest {
     @Test
     public void whenTryDeleteProductsReturnSuccess() throws ServiceException {
         Long id = 1L;
-        Category category = getCategory();
-        Brand brand = getBrand();
-        Product product = getProduct(category, brand);
+        Category category = categoryHelper.getCategory();
+        Brand brand = brandHelper.getBrand();
+        Product product = productHelper.getProduct(category, brand);
 
         when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
 
@@ -148,9 +153,9 @@ public class ProductBOTest {
     @Test
     public void whenTryUpdateStatusReturnSuccess() throws ServiceException {
         Long id = 1L;
-        Category category = getCategory();
-        Brand brand = getBrand();
-        Product product = getProduct(category, brand);
+        Category category = categoryHelper.getCategory();
+        Brand brand = brandHelper.getBrand();
+        Product product = productHelper.getProduct(category, brand);
         Status status = Status.INATIVO;
 
         when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
@@ -163,40 +168,5 @@ public class ProductBOTest {
         assertEquals(Status.INATIVO, result.getStatus());
     }
 
-    private static ProductCreateDTO getProductCreateDTO(Brand brand, Category category) {
-        ProductCreateDTO productCreateDTO = new ProductCreateDTO();
-        productCreateDTO.setName("Product 1");
-        productCreateDTO.setDescription("test product");
-        productCreateDTO.setPrice(new BigDecimal("100.00"));
-        productCreateDTO.setQuantity(10);
-        productCreateDTO.setBrand(brand.getName());
-        productCreateDTO.setCategory(category.getName());
-        return productCreateDTO;
-    }
 
-    private static Product getProduct(Category category, Brand brand) {
-        Product product = new Product();
-        product.setId(1L);
-        product.setName("Product 1");
-        product.setDescription("test product");
-        product.setPrice(new BigDecimal("100.00"));
-        product.setStatus(Status.ATIVO);
-        product.setCategory(category);
-        product.setBrand(brand);
-        return product;
-    }
-
-    private static Brand getBrand() {
-        Brand brand = new Brand();
-        brand.setId(1L);
-        brand.setName("Brand 1");
-        return brand;
-    }
-
-    private static Category getCategory() {
-        Category category = new Category();
-        category.setId(1L);
-        category.setName("Category 1");
-        return category;
-    }
 }
