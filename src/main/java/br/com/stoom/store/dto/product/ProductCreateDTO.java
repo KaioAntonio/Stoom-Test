@@ -1,6 +1,5 @@
 package br.com.stoom.store.dto.product;
 
-import br.com.stoom.store.model.enums.Status;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -23,9 +22,6 @@ public class ProductCreateDTO {
     @NotNull(message = "O preço é obrigatório")
     @DecimalMin(value = "0.01", message = "O preço deve ser maior que 0")
     private BigDecimal price;
-
-    @NotNull(message = "O SKU é obrigatório")
-    private String sku;
 
     @NotNull(message = "A quantidade é obrigatório")
     private Integer quantity;
