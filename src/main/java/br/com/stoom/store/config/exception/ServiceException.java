@@ -1,4 +1,4 @@
-package br.com.stoom.store.config;
+package br.com.stoom.store.config.exception;
 
 public class ServiceException extends Exception{
 

@@ -1,10 +1,12 @@
 package br.com.stoom.store.controller;
 
 import br.com.stoom.store.business.BrandBO;
-import br.com.stoom.store.config.ServiceException;
+import br.com.stoom.store.config.exception.ServiceException;
 import br.com.stoom.store.dto.brand.BrandRequestDTO;
 import br.com.stoom.store.dto.brand.BrandResponseDTO;
 import br.com.stoom.store.model.enums.Status;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +33,14 @@ public class BrandController {
     private final BrandBO brandBO;
 
     @GetMapping(value = "/")
+    @Operation(
+            summary = "Obter todas as marcas",
+            description = "Recupera uma lista paginada de todas as marcas ativas.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Marcas encontradas"),
+                    @ApiResponse(responseCode = "404", description = "Nenhuma marca encontrada")
+            }
+    )
     public ResponseEntity<Page<BrandResponseDTO>> findAll(
         @RequestParam(defaultValue = "0") Integer page,
         @RequestParam(defaultValue = "15") Integer size
@@ -41,6 +51,14 @@ public class BrandController {
     }
 
     @PostMapping(value = "/")
+    @Operation(
+            summary = "Criar uma nova marca",
+            description = "Cria uma nova marca com as informações fornecidas.",
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "Marca criada com sucesso"),
+                    @ApiResponse(responseCode = "400", description = "Requisição inválida")
+            }
+    )
     public ResponseEntity<BrandResponseDTO> create(
             @RequestBody @Valid BrandRequestDTO brandRequestDTO
     ) {
@@ -48,6 +66,14 @@ public class BrandController {
     }
 
     @PutMapping(value = "/{id}")
+    @Operation(
+            summary = "Atualizar uma marca existente",
+            description = "Atualiza as informações de uma marca existente baseado no ID.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Marca atualizada com sucesso"),
+                    @ApiResponse(responseCode = "404", description = "Marca não encontrada")
+            }
+    )
     public ResponseEntity<BrandResponseDTO> update(
             @PathVariable Long id,
             @RequestBody @Valid BrandRequestDTO brandRequestDTO
@@ -56,6 +82,14 @@ public class BrandController {
     }
 
     @PatchMapping(value = "/{id}")
+    @Operation(
+            summary = "Alterar o status de uma marca",
+            description = "Atualiza o status de uma marca (por exemplo, ativa ou inativa) com base no ID.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Status da marca alterado com sucesso"),
+                    @ApiResponse(responseCode = "404", description = "Marca não encontrada")
+            }
+    )
     public ResponseEntity<BrandResponseDTO> changeStatus(
             @PathVariable Long id,
             @RequestParam Status status
@@ -64,6 +98,14 @@ public class BrandController {
     }
 
     @DeleteMapping(value = "/{id}")
+    @Operation(
+            summary = "Excluir uma marca",
+            description = "Exclui uma marca com base no ID fornecido.",
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "Marca excluída com sucesso"),
+                    @ApiResponse(responseCode = "404", description = "Marca não encontrada")
+            }
+    )
     public ResponseEntity<Void> delete(
             @PathVariable Long id
     ) throws ServiceException {

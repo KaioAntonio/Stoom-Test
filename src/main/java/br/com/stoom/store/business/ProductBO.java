@@ -1,7 +1,7 @@
 package br.com.stoom.store.business;
 
 import br.com.stoom.store.business.interfaces.IProductBO;
-import br.com.stoom.store.config.ServiceException;
+import br.com.stoom.store.config.exception.ServiceException;
 import br.com.stoom.store.dto.product.ProductCreateDTO;
 import br.com.stoom.store.dto.product.ProductResponseDTO;
 import br.com.stoom.store.model.brand.Brand;

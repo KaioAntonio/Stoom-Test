@@ -1,10 +1,9 @@
 package br.com.stoom.store.business;
 
 import br.com.stoom.store.business.interfaces.IBrandBO;
-import br.com.stoom.store.config.ServiceException;
+import br.com.stoom.store.config.exception.ServiceException;
 import br.com.stoom.store.dto.brand.BrandRequestDTO;
 import br.com.stoom.store.dto.brand.BrandResponseDTO;
-import br.com.stoom.store.dto.category.CategoryResponseDTO;
 import br.com.stoom.store.model.brand.Brand;
 import br.com.stoom.store.model.enums.Status;
 import br.com.stoom.store.repository.BrandRepository;

@@ -1,4 +1,4 @@
-package br.com.stoom.store.config;
+package br.com.stoom.store.config.exception;
 
 
 import org.springframework.http.HttpHeaders;

@@ -1,6 +1,6 @@
 package br.com.stoom.store.business.interfaces;
 
-import br.com.stoom.store.config.ServiceException;
+import br.com.stoom.store.config.exception.ServiceException;
 import br.com.stoom.store.dto.product.ProductCreateDTO;
 import br.com.stoom.store.dto.product.ProductResponseDTO;
 import br.com.stoom.store.model.enums.Status;
