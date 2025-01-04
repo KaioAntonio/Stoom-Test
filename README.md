@@ -1,22 +1,68 @@
-**Seja bem-vindo candidato!**
+# Prova Técnica - Stoom Store
 
-Como um desenvolvedor Back-End na Stoom uma das maiores responsabilidades que você vai ter é desenvolver funcionalidades e corrigir bugs em sistemas de e-commerce de larga escala que utilizam Spring Boot. Com base nisso, precisamos de sua ajuda para construir a nossa loja Stoom, que deve conter as seguintes funcionalidades:
+Repositório da aplicação RESTful da prova técnica [(Teste Stoom)](https://github.com/Luccasplima/teste-stoom) 
+que oferece funcionalidades para gerenciar **Produtos**, **Marcas** e **Categorias**. Foi desenvolvido utilizando o **Spring Boot** e segue as boas práticas de desenvolvimento com **100% de cobertura nos testes unitários**.
 
-1. Deve ser desenvolvida uma API de CRUD de produtos
-2. Os produtos devem ser enriquecidos com as informações que você julgar relevante para o funcionamento em uma loja, algumas são obrigatórias:
-    - Categorias
-    - Marca
-    - Preços
-3. Deve existir um endpoint na API para a busca de produtos que será utilizada na loja
-4. Deve existir um endpoint que lista os produtos de uma determinada Marca
-5. Deve existir um endpoint que lista os produtos de uma determinada Categoria
-6. Produtos podem ser inativados para não aparecerem na busca ou nas listagens sem a necessidade de serem deletados para poderem ser reativados posteriormente
-7. Marcas e categorias também podem ser inativados para não aparecerem na loja
+---
 
-**Informações relevantes**:
-- Atente-se à todos os pré-requisitos estabelecidos, porém não limite-se a eles, ideias novas ou melhorias são sempre bem-vindas :smiley:
-- Você tem total liberdade para fazer qualquer tipo de alteração em qualquer ponto do código (contanto que não alterem a maneira de execução da aplicação)
-- Se possível, adicione uma collection do Postman no repositório para conseguirmos testar o código da mesma forma que você
-- Boas práticas, legibilidade, testes e performance são alguns dos pontos que serão considerados durante a avaliação
+## 🔧 Funcionalidades
 
-**Boa sorte!**
+- **CRUD de Produtos**: Criação, leitura, atualização e exclusão.
+- **CRUD de Marcas**: Criação, leitura, atualização e exclusão.
+- **CRUD de Categorias**: Criação, leitura, atualização e exclusão.
+- **Swagger**: Documentação interativa da API. Disponível em: http://localhost:8080/swagger-ui/index.html#
+- **Testes unitários**: Cobertura completa das funcionalidades.
+
+--- 
+
+## Endpoints da API
+
+### Produtos
+| **Método** | **Endpoint**          | **Descrição**                       |
+|------------|------------------------|-------------------------------------|
+| GET        | `/api/product/`        | Lista todos os produtos.            |
+| POST       | `/api/product/`        | Cria um novo produto.               |
+| PUT        | `/api/product/{id}`    | Atualiza um produto.                |
+| DELETE     | `/api/product/{id}`    | Remove um produto.                  |
+| PATCH      | `/api/product/status/{id}`    | Atualiza o status de um produto.    |
+
+### Marcas
+| **Método** | **Endpoint**          | **Descrição**                       |
+|------------|------------------------|-------------------------------------|
+| GET        | `/api/brand/`          | Lista todas as marcas.              |
+| POST       | `/api/brand/`          | Cria uma nova marca.                |
+| PUT        | `/api/brand/{id}`      | Atualiza uma marca.                 |
+| DELETE     | `/api/brand/{id}`      | Remove uma marca.                   |
+| PATCH      | `/api/brand/status/{id}`    | Atualiza o status de uma marca.    |
+
+### Categorias
+| **Método** | **Endpoint**          | **Descrição**                       |
+|------------|------------------------|-------------------------------------|
+| GET        | `/api/category/`       | Lista todas as categorias.          |
+| POST       | `/api/category/`       | Cria uma nova categoria.            |
+| PUT        | `/api/category/{id}`   | Atualiza uma categoria.             |
+| DELETE     | `/api/category/{id}`   | Remove uma categoria.               |
+| PATCH      | `/api/category/status/{id}`    | Atualiza o status de uma categoria.    |
+
+---
+
+## Testes Unitários
+
+Cobertura de 100% dos testes unitários
+
+![image](https://github.com/user-attachments/assets/ea4ca6ea-af20-4ec5-95d1-38f1d321b8aa)
+
+![image](https://github.com/user-attachments/assets/62a5d6ee-cf54-4f81-a50c-fc64f0260439)
+
+## Observações
+
+- Pensei em dockerizar a aplicação, porém proposto não alterar a execução da aplicação.
+-  O SKU é gerado no formato `AAA-BBB-CCC-TIMESTAMP`, onde:  
+  - `AAA` = 3 primeiras letras do nome da categoria.  
+  - `BBB` = 3 primeiras letras do nome da marca.  
+  - `CCC` = 3 primeiras letras do nome do produto.  
+  - `TIMESTAMP` = marca de tempo única para garantir unicidade.   
+
+## Feedback 
+
+Gostaria de agradecer pela oportunidade de participar deste processo seletivo. Espero poder contribuir com minhas habilidades e fazer parte do sucesso da equipe.
