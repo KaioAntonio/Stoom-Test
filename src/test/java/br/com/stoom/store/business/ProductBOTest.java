@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -33,6 +34,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -113,6 +115,23 @@ public class ProductBOTest {
         assertEquals(productCreateDTO.getName(), productResponseDTO.getName());
         assertEquals(productCreateDTO.getDescription(), productResponseDTO.getDescription());
         assertEquals(productCreateDTO.getPrice(), productResponseDTO.getPrice());
+    }
+
+    @Test
+    public void whenTryCreateProductsWithBrandOrCategoryInativeReturnException() throws ServiceException {
+        Category category = categoryHelper.getCategory();
+        Brand brand = brandHelper.getBrand();
+        category.setStatus(Status.INATIVO);
+        brand.setStatus(Status.INATIVO);
+        ProductCreateDTO productCreateDTO = productHelper.getProductCreateDTO(brand, category);
+
+        when(categoryBO.findByName(anyString())).thenReturn(category);
+        when(brandBO.findByName(anyString())).thenReturn(brand);
+
+        ServiceException exception = assertThrows(ServiceException.class,
+                () -> productBO.create(productCreateDTO));
+
+        Assertions.assertEquals(exception.getMessage(), "Categoria ou Marca precisa está ativa");
     }
 
     @Test

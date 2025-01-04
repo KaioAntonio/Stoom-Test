@@ -36,8 +36,11 @@ public class ProductBO implements IProductBO {
 
     public ProductResponseDTO create(ProductCreateDTO productRequestDTO) throws ServiceException {
         Category category = categoryBO.findByName(productRequestDTO.getCategory());
-
         Brand brand = brandBO.findByName(productRequestDTO.getBrand());
+
+        if(category.getStatus() == Status.INATIVO || brand.getStatus() == Status.INATIVO) {
+            throw new ServiceException("Categoria ou Marca precisa está ativa");
+        }
 
         Product product = createProduct(productRequestDTO, brand, category);
         return mapper.convertValue(product, ProductResponseDTO.class);
